@@ -1,32 +1,48 @@
-# 🔤 FontTest — versión web (GitHub Pages)
-
-App para **probar fuentes** `.ttf`, `.otf`, `.woff` y `.woff2` directamente en el navegador.
-Un único `index.html` estático, sin build ni dependencias.
+# 🔤 FontTest
 
 - **Repositorio:** <https://github.com/SirAxelloid1460/FontTest>
-- **App en vivo:** <https://siraxelloid1460.github.io/FontTest/>
+- **Versión web (sin instalar):** <https://siraxelloid1460.github.io/FontTest/>
 
-## Publicar en GitHub Pages
+App de escritorio ligera para **probar fuentes** `.ttf`, `.otf`, `.woff` y `.woff2`.
+Es un **único archivo HTML** que se abre en tu navegador — sin instalación, sin dependencias y **100 % offline**.
 
-1. Sube el contenido de esta carpeta (`index.html`, `.nojekyll`, `README.md`, `LICENSE`) a la raíz de la rama `main` del repo `FontTest`.
-2. En el repo: **Settings → Pages**.
-3. En *Build and deployment* → *Source*: **Deploy from a branch**.
-4. Elige la rama `main` y la carpeta `/ (root)`. Guarda.
-5. En 1-2 minutos la app estará en:
-   <https://siraxelloid1460.github.io/FontTest/>
+## Uso
 
-El archivo `.nojekyll` evita que GitHub procese el sitio con Jekyll (no es necesario para un HTML, pero es buena práctica).
+1. Abre `index.html` con doble clic (se abre en tu navegador como una app).
+2. **Importa una fuente**: arrastra un archivo (o un `.zip` con fuentes dentro) al recuadro, o haz clic para elegirlo.
+3. Escribe tu **texto de ejemplo** y ajústalo con los controles.
 
-## Notas al servir por HTTPS
+## Funciones
 
-- Al importar **desde un enlace**, usa siempre URLs `https://` (una página `https` bloquea recursos `http` por *mixed content*).
-- El límite de **CORS** sigue igual: algunos sitios (fontspace, itch.io…) no permiten leer sus páginas/descargas.
-  En ese caso, descarga el archivo o `.zip` e **impórtalo** arrastrándolo (los `.zip` se cargan solos).
-- Todo el procesamiento es en el navegador del visitante; las fuentes no se suben a ningún servidor.
+- Importa **varias fuentes** a la vez y cámbialas con un clic para comparar.
+- Controles de **tamaño, grosor, interletrado e interlineado**.
+- Estilos: cursiva, subrayado, MAYÚS y **colores de texto/fondo**.
+- Vistas: **texto propio**, **pangrama**, **abecedario** completo y **escala de tamaños**.
+- **Descarga** cada fuente cargada con un clic (⬇), reutilizando la copia en memoria — funciona incluso sin conexión.
+
+## Importar desde un enlace (requiere internet)
+
+En el campo *"Desde un enlace"* puedes pegar:
+
+- Un **archivo directo** (`.ttf/.otf/.woff/.woff2`).
+- Un **`.zip`** — se descomprime en memoria y carga todas las fuentes que contenga.
+- Un enlace de **Google Fonts** o cualquier hoja CSS con `@font-face`.
+- Enlaces de descarga **sin extensión** (se detecta el tipo por los bytes).
+
+> **fontspace.com / freejapanesefont.com / itch.io y similares:** por seguridad del navegador (CORS),
+> no siempre se puede leer la *página* de estos sitios. Si te sale el aviso, descarga tú el archivo o
+> el `.zip` desde la web y luego **impórtalo** aquí (arrástralo — los `.zip` también funcionan al arrastrarlos).
+
+## Privacidad
+
+Todo ocurre en tu equipo. Las fuentes que importas **nunca se suben a ningún servidor**. La app solo
+accede a internet si tú pegas un enlace para importar desde él.
 
 ## Licencia
 
 Copyright (C) 2026 SirAxelloid1460
 
-**GNU General Public License v3** (o posterior). Software libre, SIN GARANTÍA.
-Ver el archivo [LICENSE](LICENSE) o <https://www.gnu.org/licenses/>.
+Este programa es software libre: puedes redistribuirlo y/o modificarlo bajo los términos
+de la **GNU General Public License v3** (o, a tu elección, cualquier versión posterior)
+publicada por la Free Software Foundation. Se distribuye SIN NINGUNA GARANTÍA.
+Consulta el archivo [LICENSE](LICENSE) o <https://www.gnu.org/licenses/> para el texto completo.
