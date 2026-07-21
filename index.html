@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<!--
+  FontTest
+  Versión: 1.0.0
+  Copyright (C) 2026 SirAxelloid1460
+  Última modificación: 2026-07-21
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  GNU General Public License for more details:
+  <https://www.gnu.org/licenses/>. See the LICENSE file for the full text.
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FontTest</title>
+<style>
+  :root{
+    --bg:#0f1115; --panel:#171a21; --panel-2:#1e222b; --border:#2a2f3a;
+    --text:#e7e9ee; --muted:#9aa1ad; --accent:#6ea8fe; --accent-2:#3b82f6;
+    --radius:10px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg);
+    color:var(--text); display:flex; flex-direction:column; height:100vh; overflow:hidden;
+  }
+  header{
+    padding:12px 18px; background:var(--panel); border-bottom:1px solid var(--border);
+    display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+  }
+  header h1{font-size:16px; margin:0; font-weight:600; letter-spacing:.3px}
+  header .sub{color:var(--muted); font-size:12px}
+  .main{display:flex; flex:1; min-height:0}
+  aside{
+    width:320px; min-width:320px; background:var(--panel); border-right:1px solid var(--border);
+    padding:16px; overflow-y:auto; display:flex; flex-direction:column; gap:18px;
+  }
+  .drop{
+    border:2px dashed var(--border); border-radius:var(--radius); padding:22px 14px; text-align:center;
+    color:var(--muted); cursor:pointer; transition:.15s; background:var(--panel-2);
+  }
+  .drop:hover,.drop.drag{border-color:var(--accent); color:var(--text); background:#1a2130}
+  .drop strong{color:var(--text)}
+  .drop small{display:block; margin-top:6px; font-size:11px}
+  .group{display:flex; flex-direction:column; gap:10px}
+  .group h2{font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin:0 0 2px}
+  label.row{display:flex; align-items:center; justify-content:space-between; gap:10px; font-size:13px}
+  label.row .val{color:var(--muted); font-variant-numeric:tabular-nums; min-width:52px; text-align:right}
+  input[type=range]{width:100%; accent-color:var(--accent)}
+  select,input[type=text]{
+    width:100%; background:var(--panel-2); border:1px solid var(--border); color:var(--text);
+    border-radius:8px; padding:8px 10px; font-size:13px;
+  }
+  input[type=color]{width:38px; height:30px; border:1px solid var(--border); border-radius:6px; background:none; padding:2px; cursor:pointer}
+  .colorrow{display:flex; align-items:center; gap:8px; font-size:13px}
+  .fontlist{display:flex; flex-direction:column; gap:6px; max-height:220px; overflow-y:auto}
+  .fontitem{
+    display:flex; align-items:center; gap:8px; background:var(--panel-2); border:1px solid var(--border);
+    border-radius:8px; padding:7px 10px; font-size:13px; cursor:pointer;
+  }
+  .fontitem.active{border-color:var(--accent); background:#1a2333}
+  .fontitem .name{flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+  .fontitem .dl{color:var(--muted); cursor:pointer; padding:0 3px; display:flex; align-items:center}
+  .fontitem .dl:hover{color:var(--accent)}
+  .fontitem .rm{color:var(--muted); cursor:pointer; padding:0 4px; font-size:15px}
+  .fontitem .rm:hover{color:#ff6b6b}
+  .toggles{display:flex; gap:6px; flex-wrap:wrap}
+  .chip{
+    border:1px solid var(--border); background:var(--panel-2); color:var(--muted);
+    border-radius:20px; padding:5px 11px; font-size:12px; cursor:pointer; user-select:none;
+  }
+  .chip.on{background:var(--accent-2); border-color:var(--accent-2); color:#fff}
+  .content{flex:1; display:flex; flex-direction:column; min-width:0}
+  .sample-input{
+    width:100%; border:none; border-bottom:1px solid var(--border); background:var(--panel);
+    color:var(--text); padding:12px 18px; font-size:14px; resize:none; outline:none; height:64px;
+    font-family:'Segoe UI',system-ui,sans-serif;
+  }
+  .preview{flex:1; overflow:auto; padding:32px 40px; word-break:break-word}
+  .preview .line{margin:0 0 6px}
+  .empty{color:var(--muted); text-align:center; margin-top:80px; font-size:15px}
+  .btn{background:var(--accent-2); color:#fff; border:none; border-radius:8px; padding:8px 12px; font-size:13px; cursor:pointer}
+  .btn.sec{background:var(--panel-2); border:1px solid var(--border); color:var(--text)}
+  .footnote{color:var(--muted); font-size:11px; line-height:1.5}
+</style>
+</head>
+<body>
+<header>
+  <h1>🔤 FontTest</h1>
+  <span class="sub">TTF · OTF · WOFF · WOFF2 — todo local, sin conexión</span>
+</header>
+
+<div class="main">
+  <aside>
+    <div class="drop" id="drop">
+      <strong>Importar fuente</strong>
+      <small>Arrastra aquí o haz clic — fuentes o .zip, puedes cargar varias</small>
+    </div>
+    <input type="file" id="file" accept=".ttf,.otf,.woff,.woff2,.zip" multiple hidden>
+
+    <div class="group">
+      <h2>Desde un enlace (requiere internet)</h2>
+      <input type="text" id="url" placeholder="Pega el enlace de la fuente, ZIP o Google Fonts…">
+      <button class="btn" id="urlBtn">Importar desde enlace</button>
+      <span id="urlMsg" style="font-size:11px;color:var(--muted);min-height:14px"></span>
+      <small style="font-size:11px;color:var(--muted);line-height:1.5">
+        Admite: archivo directo (.ttf/.otf/.woff/.woff2), <b>.zip</b> (se descomprime y carga todo),
+        Google Fonts y páginas web. Para <b>fontspace</b>, <b>freejapanesefont</b> o <b>itch.io</b>:
+        clic derecho en el botón de descarga ▸ <i>Copiar dirección del enlace</i> y pégalo aquí.
+      </small>
+    </div>
+
+    <div class="group">
+      <h2>Fuentes cargadas</h2>
+      <div class="fontlist" id="fontlist"><span class="footote" style="color:var(--muted);font-size:12px">Ninguna todavía.</span></div>
+    </div>
+
+    <div class="group">
+      <h2>Ajustes</h2>
+      <label class="row">Tamaño <span class="val" id="sizeVal">48 px</span></label>
+      <input type="range" id="size" min="8" max="200" value="48">
+      <label class="row">Grosor <span class="val" id="weightVal">400</span></label>
+      <input type="range" id="weight" min="100" max="900" step="100" value="400">
+      <label class="row">Interletrado <span class="val" id="spacingVal">0 px</span></label>
+      <input type="range" id="spacing" min="-10" max="30" step="0.5" value="0">
+      <label class="row">Interlineado <span class="val" id="lineVal">1.3</span></label>
+      <input type="range" id="line" min="0.8" max="3" step="0.1" value="1.3">
+    </div>
+
+    <div class="group">
+      <h2>Estilo</h2>
+      <div class="toggles">
+        <span class="chip" data-t="italic">Cursiva</span>
+        <span class="chip" data-t="underline">Subrayado</span>
+        <span class="chip" data-t="upper">MAYÚS</span>
+      </div>
+      <div class="colorrow"><input type="color" id="fg" value="#e7e9ee"> Texto
+        <input type="color" id="bg" value="#0f1115" style="margin-left:auto"> Fondo</div>
+    </div>
+
+    <div class="group">
+      <h2>Vista</h2>
+      <div class="toggles">
+        <span class="chip on" data-v="custom">Texto propio</span>
+        <span class="chip" data-v="pangram">Pangrama</span>
+        <span class="chip" data-v="alpha">Abecedario</span>
+        <span class="chip" data-v="ramp">Escala tamaños</span>
+      </div>
+    </div>
+
+    <p class="footote">Consejo: carga varias fuentes y haz clic en cada una de la lista para comparar. Nada sale de tu equipo.</p>
+  </aside>
+
+  <div class="content">
+    <textarea class="sample-input" id="sample" placeholder="Escribe tu texto de ejemplo aquí...">El veloz murciélago hindú comía feliz cardillo y kiwi. 1234567890</textarea>
+    <div class="preview" id="preview"><div class="empty">Importa una fuente para empezar la previsualización.</div></div>
+  </div>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+const fonts = [];        // {name, family, style}
+let activeFamily = null;
+let viewMode = 'custom';
+const styleState = {italic:false, underline:false, upper:false};
+
+const drop = $('#drop'), fileInput = $('#file');
+drop.onclick = () => fileInput.click();
+['dragover','dragenter'].forEach(e=>drop.addEventListener(e,ev=>{ev.preventDefault();drop.classList.add('drag')}));
+['dragleave','drop'].forEach(e=>drop.addEventListener(e,ev=>{ev.preventDefault();drop.classList.remove('drag')}));
+drop.addEventListener('drop', ev => handleFiles(ev.dataTransfer.files));
+fileInput.addEventListener('change', () => handleFiles(fileInput.files));
+
+async function handleFiles(list){
+  for(const file of list){
+    const isZip  = /\.zip$/i.test(file.name);
+    const isFont = /\.(ttf|otf|woff2?)$/i.test(file.name);
+    if(!isZip && !isFont) continue;
+    try{
+      const buf = await file.arrayBuffer();
+      const u8 = new Uint8Array(buf);
+      if(isZip || sniff(u8)==='zip'){
+        const n = await importFontsFromZip(u8);
+        if(!n) alert('El ZIP «'+file.name+'» no contenía fuentes reconocibles.');
+      }else{
+        await loadFontFromBuffer(file.name.replace(/\.[^.]+$/,''), buf);
+      }
+      renderFontList(); render();
+    }catch(err){
+      alert('No se pudo cargar «'+file.name+'»: '+err.message);
+    }
+  }
+}
+function hash(s){let h=0;for(let i=0;i<s.length;i++){h=(h<<5)-h+s.charCodeAt(i)|0}return h}
+
+// ---- Importar desde un enlace (online) ----
+const urlInput = $('#url'), urlBtn = $('#urlBtn'), urlMsg = $('#urlMsg');
+urlBtn.onclick = importFromUrl;
+urlInput.addEventListener('keydown', e => { if(e.key==='Enter') importFromUrl(); });
+
+async function loadFontFromBuffer(name, buf){
+  const family = 'user_' + Math.abs(hash(name + buf.byteLength + fonts.length + performance.now())).toString(36);
+  const ff = new FontFace(family, buf);
+  await ff.load();
+  document.fonts.add(ff);
+  fonts.push({name, family, buffers:[buf]});
+  activeFamily = family;
+}
+
+// Carga varios subconjuntos (unicode-range) bajo UNA sola familia -> una entrada
+async function loadFontVariants(name, variants){
+  const family = 'user_' + Math.abs(hash(name + variants.length + fonts.length + performance.now())).toString(36);
+  const buffers = [];
+  let any = false;
+  for(const v of variants){
+    try{
+      const ff = new FontFace(family, v.buf, v.unicodeRange ? {unicodeRange:v.unicodeRange} : {});
+      await ff.load(); document.fonts.add(ff); any = true; buffers.push(v.buf);
+    }catch(_){}
+  }
+  if(!any) return false;
+  fonts.push({name, family, buffers}); activeFamily = family; return true;
+}
+
+// Extensión real según la firma de bytes del buffer
+function extFromBuf(buf){
+  const b = new Uint8Array(buf, 0, 4);
+  if(b[0]===0x77&&b[1]===0x4F&&b[2]===0x46&&b[3]===0x32) return 'woff2';
+  if(b[0]===0x77&&b[1]===0x4F&&b[2]===0x46&&b[3]===0x46) return 'woff';
+  if(b[0]===0x4F&&b[1]===0x54&&b[2]===0x54&&b[3]===0x4F) return 'otf';
+  return 'ttf';
+}
+
+// Descarga la(s) copia(s) que la app ya guarda en memoria
+function downloadFont(i){
+  const f = fonts[i];
+  if(!f || !f.buffers || !f.buffers.length) return;
+  const safe = f.name.replace(/[\\/:*?"<>|]+/g,'_');
+  f.buffers.forEach((buf, idx) => {
+    const ext = extFromBuf(buf);
+    const suffix = f.buffers.length>1 ? '-'+(idx+1) : '';
+    const blob = new Blob([buf], {type:'font/'+ext});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = safe + suffix + '.' + ext;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(a.href), 2000);
+  });
+}
+
+const msgOk  = t => { urlMsg.style.color='#7ee787'; urlMsg.textContent=t; };
+const msgErr = t => { urlMsg.style.color='#ff8a8a'; urlMsg.textContent=t; };
+const msgInfo= t => { urlMsg.style.color='var(--muted)'; urlMsg.textContent=t; };
+
+function nameFromUrl(url){
+  try{ return decodeURIComponent(url.split(/[?#]/)[0].split('/').pop().replace(/\.[^.]+$/,'')) || 'Fuente'; }
+  catch(_){ return 'Fuente'; }
+}
+
+// Identifica el tipo real por su firma de bytes (no por la extensión)
+function sniff(b){
+  if(b.length<4) return 'other';
+  if(b[0]===0x50&&b[1]===0x4B) return 'zip';                                   // PK..
+  if(b[0]===0x77&&b[1]===0x4F&&b[2]===0x46&&b[3]===0x46) return 'font';        // wOFF
+  if(b[0]===0x77&&b[1]===0x4F&&b[2]===0x46&&b[3]===0x32) return 'font';        // wOF2
+  if(b[0]===0x4F&&b[1]===0x54&&b[2]===0x54&&b[3]===0x4F) return 'font';        // OTTO (otf)
+  if(b[0]===0x00&&b[1]===0x01&&b[2]===0x00&&b[3]===0x00) return 'font';        // ttf
+  if(b[0]===0x74&&b[1]===0x72&&b[2]===0x75&&b[3]===0x65) return 'font';        // 'true'
+  if(b[0]===0x74&&b[1]===0x74&&b[2]===0x63&&b[3]===0x66) return 'font';        // 'ttcf'
+  return 'other';
+}
+const FONT_RE = /\.(ttf|otf|woff2?)$/i;
+
+// Descompresión DEFLATE con el motor nativo del navegador (sigue offline)
+async function inflateRaw(u8){
+  const ds = new DecompressionStream('deflate-raw');
+  const stream = new Blob([u8]).stream().pipeThrough(ds);
+  return new Uint8Array(await new Response(stream).arrayBuffer());
+}
+
+// Extrae y carga las fuentes contenidas en un ZIP (lee el directorio central)
+async function importFontsFromZip(u8){
+  const dv = new DataView(u8.buffer, u8.byteOffset, u8.byteLength);
+  // Buscar End Of Central Directory (firma 0x06054b50) desde el final
+  let eo = -1;
+  for(let i=u8.length-22; i>=0 && i>u8.length-22-65536; i--){
+    if(dv.getUint32(i,true)===0x06054b50){ eo=i; break; }
+  }
+  if(eo<0) throw new Error('ZIP no válido.');
+  let n = dv.getUint16(eo+10,true);
+  let p = dv.getUint32(eo+16,true);
+  let loaded = 0;
+  for(let k=0; k<n && p+46<=u8.length; k++){
+    if(dv.getUint32(p,true)!==0x02014b50) break;
+    const method   = dv.getUint16(p+10,true);
+    const compSize = dv.getUint32(p+20,true);
+    const nameLen  = dv.getUint16(p+28,true);
+    const extraLen = dv.getUint16(p+30,true);
+    const commLen  = dv.getUint16(p+32,true);
+    const lho      = dv.getUint32(p+42,true);
+    const name = new TextDecoder().decode(u8.subarray(p+46, p+46+nameLen));
+    p += 46 + nameLen + extraLen + commLen;
+    if(name.startsWith('__MACOSX') || !FONT_RE.test(name)) continue;
+    // Cabecera local para localizar el inicio de los datos comprimidos
+    if(dv.getUint32(lho,true)!==0x04034b50) continue;
+    const lNameLen  = dv.getUint16(lho+26,true);
+    const lExtraLen = dv.getUint16(lho+28,true);
+    const dataStart = lho + 30 + lNameLen + lExtraLen;
+    const comp = u8.subarray(dataStart, dataStart+compSize);
+    try{
+      const raw = method===0 ? comp : method===8 ? await inflateRaw(comp) : null;
+      if(!raw) continue;
+      const label = decodeURIComponent(name.split('/').pop().replace(/\.[^.]+$/,''));
+      await loadFontFromBuffer(label, raw.slice().buffer);
+      loaded++;
+    }catch(_){}
+  }
+  return loaded;
+}
+
+// Hoja CSS con @font-face (Google Fonts u otras): agrupa por familia/peso/estilo
+async function importFromCss(css, baseUrl){
+  const faces = [...css.matchAll(/@font-face\s*{([^}]*)}/gi)];
+  const groups = new Map(), order = [], seen = new Set();
+  for(const m of faces){
+    const block = m[1];
+    const srcM = block.match(/src\s*:[^;]*url\((['"]?)([^'")]+)\1\)/i);
+    if(!srcM) continue;
+    let src = srcM[2];
+    if(!/^https?:/i.test(src)) src = new URL(src, baseUrl).href;
+    if(seen.has(src)) continue; seen.add(src);
+    const famM = block.match(/font-family\s*:\s*(['"]?)([^;'"]+)\1/i);
+    const wM = block.match(/font-weight\s*:\s*([^;]+)/i);
+    const urM = block.match(/unicode-range\s*:\s*([^;]+)/i);
+    const italic = /font-style\s*:\s*italic/i.test(block);
+    let label = (famM ? famM[2].trim() : 'Fuente');
+    if(wM && wM[1].trim()!=='400' && wM[1].trim()!=='normal') label += ' ' + wM[1].trim();
+    if(italic) label += ' Italic';
+    if(!groups.has(label)){ groups.set(label, []); order.push(label); }
+    groups.get(label).push({src, unicodeRange: urM ? urM[1].trim() : ''});
+  }
+  let loaded = 0;
+  for(const label of order){
+    const variants = [];
+    for(const it of groups.get(label)){
+      try{
+        const fr = await fetch(it.src, {mode:'cors'});
+        if(!fr.ok) continue;
+        variants.push({buf: await fr.arrayBuffer(), unicodeRange: it.unicodeRange});
+      }catch(_){}
+    }
+    if(variants.length && await loadFontVariants(label, variants)) loaded++;
+  }
+  return loaded;
+}
+
+// Página HTML (best-effort): busca enlaces a fuentes o .zip y prueba a importarlos
+async function importFromHtml(html, baseUrl){
+  const cands = new Set();
+  for(const m of html.matchAll(/(?:href|src|data-[\w-]*)\s*=\s*(['"])([^'"]+)\1/gi)){
+    const raw = m[2];
+    if(FONT_RE.test(raw.split(/[?#]/)[0]) || /\.zip($|[?#])/i.test(raw)){
+      try{ cands.add(new URL(raw, baseUrl).href); }catch(_){}
+    }
+  }
+  let loaded = 0;
+  for(const c of cands){
+    try{
+      const r = await fetch(c, {mode:'cors'});
+      if(!r.ok) continue;
+      const b = new Uint8Array(await r.arrayBuffer());
+      const kind = sniff(b);
+      if(kind==='font'){ await loadFontFromBuffer(nameFromUrl(c), b.slice().buffer); loaded++; }
+      else if(kind==='zip'){ loaded += await importFontsFromZip(b); }
+      if(loaded) break; // con una que funcione basta
+    }catch(_){}
+  }
+  return loaded;
+}
+
+async function importFromUrl(){
+  const url = urlInput.value.trim();
+  if(!url) return;
+  if(!navigator.onLine){ msgErr('Sin conexión: no se puede importar desde un enlace.'); return; }
+  msgInfo('Cargando…'); urlBtn.disabled=true;
+  try{
+    const res = await fetch(url, {mode:'cors'});
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const u8 = new Uint8Array(await res.arrayBuffer());
+    const kind = sniff(u8);
+    let loaded = 0, note = '';
+
+    if(kind==='font'){
+      await loadFontFromBuffer(nameFromUrl(url), u8.slice().buffer); loaded = 1;
+    }else if(kind==='zip'){
+      loaded = await importFontsFromZip(u8);
+      if(!loaded) throw new Error('El ZIP no contenía fuentes reconocibles.');
+    }else{
+      const text = new TextDecoder().decode(u8);
+      if(/@font-face/i.test(text)){
+        loaded = await importFromCss(text, url);
+      }else if(/<html|<!doctype/i.test(text.slice(0,2000))){
+        loaded = await importFromHtml(text, url);
+        if(!loaded) throw new Error('⚠ Este sitio no permite importar automáticamente. Descarga tú el archivo o .zip desde la página y luego impórtalo aquí (arrástralo o usa «Importar fuente»). Los .zip también funcionan al arrastrarlos.');
+      }
+      if(!loaded) throw new Error('El enlace no contiene fuentes reconocibles.');
+    }
+    renderFontList(); render();
+    msgOk(loaded===1 ? 'Importado (1 fuente).' : 'Importado ('+loaded+' fuentes).' + note);
+    urlInput.value='';
+  }catch(err){
+    if(/Failed to fetch|NetworkError|CORS|load failed/i.test(err.message))
+      msgErr('⚠ El sitio bloquea el acceso directo (CORS). Descarga tú mismo el archivo o el .zip desde la web y luego impórtalo aquí: arrástralo al recuadro «Importar fuente» (los .zip se abren y cargan solos).');
+    else msgErr(err.message.startsWith('⚠') ? err.message : 'Error: ' + err.message);
+  }finally{ urlBtn.disabled=false; }
+}
+
+function renderFontList(){
+  const box = $('#fontlist');
+  if(!fonts.length){ box.innerHTML='<span style="color:var(--muted);font-size:12px">Ninguna todavía.</span>'; return; }
+  box.innerHTML='';
+  fonts.forEach((f,i)=>{
+    const el = document.createElement('div');
+    el.className = 'fontitem' + (f.family===activeFamily?' active':'');
+    el.innerHTML = `<span class="name" style="font-family:'${f.family}'">${f.name}</span><span class="dl" title="Descargar fuente"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11"/><path d="m8 11 4 4 4-4"/><path d="M5 20h14"/></svg></span><span class="rm" title="Quitar">✕</span>`;
+    el.querySelector('.name').onclick = ()=>{activeFamily=f.family; renderFontList(); render();};
+    el.querySelector('.dl').onclick = (e)=>{e.stopPropagation(); downloadFont(i);};
+    el.querySelector('.rm').onclick = (e)=>{e.stopPropagation(); fonts.splice(i,1); if(activeFamily===f.family) activeFamily=fonts.length?fonts[0].family:null; renderFontList(); render();};
+    box.appendChild(el);
+  });
+}
+
+// Controls
+const controls = {
+  size:{el:$('#size'), val:$('#sizeVal'), fmt:v=>v+' px'},
+  weight:{el:$('#weight'), val:$('#weightVal'), fmt:v=>v},
+  spacing:{el:$('#spacing'), val:$('#spacingVal'), fmt:v=>v+' px'},
+  line:{el:$('#line'), val:$('#lineVal'), fmt:v=>v},
+};
+Object.values(controls).forEach(c=>c.el.addEventListener('input',()=>{c.val.textContent=c.fmt(c.el.value); render();}));
+$('#sample').addEventListener('input', render);
+$('#fg').addEventListener('input', render);
+$('#bg').addEventListener('input', render);
+
+document.querySelectorAll('.chip[data-t]').forEach(ch=>ch.onclick=()=>{
+  const t=ch.dataset.t; styleState[t]=!styleState[t]; ch.classList.toggle('on',styleState[t]); render();
+});
+document.querySelectorAll('.chip[data-v]').forEach(ch=>ch.onclick=()=>{
+  document.querySelectorAll('.chip[data-v]').forEach(c=>c.classList.remove('on'));
+  ch.classList.add('on'); viewMode=ch.dataset.v; render();
+});
+
+const PANGRAM = 'El veloz murciélago hindú comía feliz cardillo y kiwi.\nThe quick brown fox jumps over the lazy dog.';
+const ALPHA = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz\n0123456789 ¡!¿?.,;:@#&%()[]{}\náéíóúñÁÉÍÓÚÑ';
+const RAMP_SIZES = [12,16,20,28,36,48,64,84];
+
+function render(){
+  const prev = $('#preview');
+  prev.style.background = $('#bg').value;
+  document.querySelector('.content').style.background = $('#bg').value;
+  if(!activeFamily){ prev.innerHTML='<div class="empty">Importa una fuente para empezar la previsualización.</div>'; return; }
+
+  const size = controls.size.el.value;
+  const base = {
+    fontFamily:`'${activeFamily}'`,
+    fontWeight:controls.weight.el.value,
+    letterSpacing:controls.spacing.el.value+'px',
+    lineHeight:controls.line.el.value,
+    color:$('#fg').value,
+    fontStyle:styleState.italic?'italic':'normal',
+    textDecoration:styleState.underline?'underline':'none',
+    textTransform:styleState.upper?'uppercase':'none',
+  };
+  const style = extra => Object.assign({}, base, extra);
+  const applyStyle = (el,o)=>Object.assign(el.style,o);
+
+  prev.innerHTML='';
+  const addLine = (text,extra)=>{
+    text.split('\n').forEach(t=>{
+      const d=document.createElement('div'); d.className='line'; d.textContent=t;
+      applyStyle(d, style(extra)); prev.appendChild(d);
+    });
+  };
+
+  if(viewMode==='custom'){
+    addLine($('#sample').value || ' ', {fontSize:size+'px'});
+  }else if(viewMode==='pangram'){
+    addLine(PANGRAM, {fontSize:size+'px'});
+  }else if(viewMode==='alpha'){
+    addLine(ALPHA, {fontSize:size+'px'});
+  }else if(viewMode==='ramp'){
+    const txt = $('#sample').value || 'Aa Bb Cc 123';
+    RAMP_SIZES.forEach(s=>{
+      const wrap=document.createElement('div'); wrap.style.margin='0 0 12px';
+      const tag=document.createElement('div'); tag.textContent=s+' px'; tag.style.cssText='color:var(--muted);font-size:11px;font-family:Segoe UI,sans-serif;margin-bottom:2px';
+      const d=document.createElement('div'); d.textContent=txt; applyStyle(d, style({fontSize:s+'px'}));
+      wrap.appendChild(tag); wrap.appendChild(d); prev.appendChild(wrap);
+    });
+  }
+}
+render();
+</script>
+</body>
+</html>
