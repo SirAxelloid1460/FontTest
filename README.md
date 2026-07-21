@@ -5,6 +5,7 @@ Un único `index.html` estático, sin build ni dependencias.
 
 - **Repositorio:** <https://github.com/SirAxelloid1460/FontTest>
 - **App en vivo:** <https://siraxelloid1460.github.io/FontTest/>
+- **Novedades:** ver [CHANGELOG.md](CHANGELOG.md)
 
 ## Publicar en GitHub Pages
 
