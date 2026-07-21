@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
   FontTest
-  Versión: 1.0.0
+  Versión: 1.1.1
   Copyright (C) 2026 SirAxelloid1460
   Última modificación: 2026-07-21
 
@@ -96,23 +96,24 @@
 <body>
 <header>
   <h1>🔤 FontTest</h1>
-  <span class="sub">TTF · OTF · WOFF · WOFF2 — todo local, sin conexión</span>
+  <span class="sub" data-i18n="subtitle">TTF · OTF · WOFF · WOFF2 — todo local, sin conexión</span>
+  <select id="lang" aria-label="Language / Idioma" style="margin-left:auto;width:auto;padding:6px 8px"></select>
 </header>
 
 <div class="main">
   <aside>
     <div class="drop" id="drop">
-      <strong>Importar fuente</strong>
-      <small>Arrastra aquí o haz clic — fuentes o .zip, puedes cargar varias</small>
+      <strong data-i18n="import_font">Importar fuente</strong>
+      <small data-i18n="import_hint">Arrastra aquí o haz clic — fuentes o .zip, puedes cargar varias</small>
     </div>
     <input type="file" id="file" accept=".ttf,.otf,.woff,.woff2,.zip" multiple hidden>
 
     <div class="group">
-      <h2>Desde un enlace (requiere internet)</h2>
-      <input type="text" id="url" placeholder="Pega el enlace de la fuente, ZIP o Google Fonts…">
-      <button class="btn" id="urlBtn">Importar desde enlace</button>
+      <h2 data-i18n="link_section">Desde un enlace (requiere internet)</h2>
+      <input type="text" id="url" data-i18n-ph="link_ph" placeholder="Pega el enlace de la fuente, ZIP o Google Fonts…">
+      <button class="btn" id="urlBtn" data-i18n="link_btn">Importar desde enlace</button>
       <span id="urlMsg" style="font-size:11px;color:var(--muted);min-height:14px"></span>
-      <small style="font-size:11px;color:var(--muted);line-height:1.5">
+      <small data-i18n-html="link_help" style="font-size:11px;color:var(--muted);line-height:1.5">
         Admite: archivo directo (.ttf/.otf/.woff/.woff2), <b>.zip</b> (se descomprime y carga todo),
         Google Fonts y páginas web. Para <b>fontspace</b>, <b>freejapanesefont</b> o <b>itch.io</b>:
         clic derecho en el botón de descarga ▸ <i>Copiar dirección del enlace</i> y pégalo aquí.
@@ -120,48 +121,48 @@
     </div>
 
     <div class="group">
-      <h2>Fuentes cargadas</h2>
-      <div class="fontlist" id="fontlist"><span class="footote" style="color:var(--muted);font-size:12px">Ninguna todavía.</span></div>
+      <h2 data-i18n="loaded_fonts">Fuentes cargadas</h2>
+      <div class="fontlist" id="fontlist"><span style="color:var(--muted);font-size:12px" data-i18n="none_yet">Ninguna todavía.</span></div>
     </div>
 
     <div class="group">
-      <h2>Ajustes</h2>
-      <label class="row">Tamaño <span class="val" id="sizeVal">48 px</span></label>
+      <h2 data-i18n="settings">Ajustes</h2>
+      <label class="row"><span data-i18n="size">Tamaño</span> <span class="val" id="sizeVal">48 px</span></label>
       <input type="range" id="size" min="8" max="200" value="48">
-      <label class="row">Grosor <span class="val" id="weightVal">400</span></label>
+      <label class="row"><span data-i18n="weight">Grosor</span> <span class="val" id="weightVal">400</span></label>
       <input type="range" id="weight" min="100" max="900" step="100" value="400">
-      <label class="row">Interletrado <span class="val" id="spacingVal">0 px</span></label>
+      <label class="row"><span data-i18n="letter_spacing">Interletrado</span> <span class="val" id="spacingVal">0 px</span></label>
       <input type="range" id="spacing" min="-10" max="30" step="0.5" value="0">
-      <label class="row">Interlineado <span class="val" id="lineVal">1.3</span></label>
+      <label class="row"><span data-i18n="line_height">Interlineado</span> <span class="val" id="lineVal">1.3</span></label>
       <input type="range" id="line" min="0.8" max="3" step="0.1" value="1.3">
     </div>
 
     <div class="group">
-      <h2>Estilo</h2>
+      <h2 data-i18n="style">Estilo</h2>
       <div class="toggles">
-        <span class="chip" data-t="italic">Cursiva</span>
-        <span class="chip" data-t="underline">Subrayado</span>
-        <span class="chip" data-t="upper">MAYÚS</span>
+        <span class="chip" data-t="italic" data-i18n="italic">Cursiva</span>
+        <span class="chip" data-t="underline" data-i18n="underline">Subrayado</span>
+        <span class="chip" data-t="upper" data-i18n="upper">MAYÚS</span>
       </div>
-      <div class="colorrow"><input type="color" id="fg" value="#e7e9ee"> Texto
-        <input type="color" id="bg" value="#0f1115" style="margin-left:auto"> Fondo</div>
+      <div class="colorrow"><input type="color" id="fg" value="#e7e9ee"> <span data-i18n="text_color">Texto</span>
+        <input type="color" id="bg" value="#0f1115" style="margin-left:auto"> <span data-i18n="bg_color">Fondo</span></div>
     </div>
 
     <div class="group">
-      <h2>Vista</h2>
+      <h2 data-i18n="view">Vista</h2>
       <div class="toggles">
-        <span class="chip on" data-v="custom">Texto propio</span>
-        <span class="chip" data-v="pangram">Pangrama</span>
-        <span class="chip" data-v="alpha">Abecedario</span>
-        <span class="chip" data-v="ramp">Escala tamaños</span>
+        <span class="chip on" data-v="custom" data-i18n="v_custom">Texto propio</span>
+        <span class="chip" data-v="pangram" data-i18n="v_pangram">Pangrama</span>
+        <span class="chip" data-v="alpha" data-i18n="v_alpha">Abecedario</span>
+        <span class="chip" data-v="ramp" data-i18n="v_ramp">Escala tamaños</span>
       </div>
     </div>
 
-    <p class="footote">Consejo: carga varias fuentes y haz clic en cada una de la lista para comparar. Nada sale de tu equipo.</p>
+    <p class="footote" data-i18n="tip">Consejo: carga varias fuentes y haz clic en cada una de la lista para comparar. Nada sale de tu equipo.</p>
   </aside>
 
   <div class="content">
-    <textarea class="sample-input" id="sample" placeholder="Escribe tu texto de ejemplo aquí...">El veloz murciélago hindú comía feliz cardillo y kiwi. 1234567890</textarea>
+    <textarea class="sample-input" id="sample" data-i18n-ph="sample_ph" placeholder="Escribe tu texto de ejemplo aquí..."></textarea>
     <div class="preview" id="preview"><div class="empty">Importa una fuente para empezar la previsualización.</div></div>
   </div>
 </div>
@@ -172,6 +173,41 @@ const fonts = [];        // {name, family, style}
 let activeFamily = null;
 let viewMode = 'custom';
 const styleState = {italic:false, underline:false, upper:false};
+
+// ---------- i18n (10 idiomas más hablados) ----------
+const LANGS = [['en','English'],['zh','中文'],['hi','हिन्दी'],['es','Español'],['fr','Français'],['ar','العربية'],['bn','বাংলা'],['pt','Português'],['ru','Русский'],['ja','日本語'],['ur','اردو']];
+const RTL = new Set(['ar','ur']);
+const I18N = {
+  en:{subtitle:"TTF · OTF · WOFF · WOFF2 — all local, offline",import_font:"Import font",import_hint:"Drag here or click — fonts or .zip, load several",link_section:"From a link (needs internet)",link_ph:"Paste a font, ZIP or Google Fonts link…",link_btn:"Import from link",link_help:"Supports: direct file (.ttf/.otf/.woff/.woff2), <b>.zip</b> (unzipped, loads all), Google Fonts and web pages. For <b>fontspace</b>, <b>freejapanesefont</b> or <b>itch.io</b>: right-click the download button ▸ <i>Copy link address</i> and paste it here.",loaded_fonts:"Loaded fonts",none_yet:"None yet.",settings:"Settings",size:"Size",weight:"Weight",letter_spacing:"Letter spacing",line_height:"Line height",style:"Style",italic:"Italic",underline:"Underline",upper:"UPPER",text_color:"Text",bg_color:"Background",view:"View",v_custom:"Own text",v_pangram:"Pangram",v_alpha:"Alphabet",v_ramp:"Size scale",tip:"Tip: load several fonts and click each one in the list to compare. Nothing leaves your device.",sample_ph:"Type your sample text here…",preview_empty:"Import a font to start previewing.",dl_title:"Download font",rm_title:"Remove",msg_loading:"Loading…",msg_offline_link:"Offline: can’t import from a link.",msg_imported_one:"Imported (1 font).",msg_imported_n:"Imported ({n} fonts).",msg_zip_no_fonts:"The ZIP had no recognizable fonts.",msg_link_no_fonts:"The link has no recognizable fonts.",msg_html_no_fonts:"⚠ This site doesn’t allow automatic import. Download the file or .zip from the page yourself, then import it here (drag it, or use “Import font”). .zip files also work when dragged.",msg_cors:"⚠ The site blocks direct access (CORS). Download the file or .zip yourself, then import it here: drag it onto the “Import font” box (.zip files open and load on their own).",msg_error:"Error: {e}",alert_zip_no_fonts:"The ZIP “{name}” had no recognizable fonts.",alert_load_fail:"Couldn’t load “{name}”: {e}",sample_default:"The quick brown fox jumps over the lazy dog. 1234567890",pangram:"The quick brown fox jumps over the lazy dog.\nPack my box with five dozen liquor jugs."},
+  es:{subtitle:"TTF · OTF · WOFF · WOFF2 — todo local, sin conexión",import_font:"Importar fuente",import_hint:"Arrastra aquí o haz clic — fuentes o .zip, puedes cargar varias",link_section:"Desde un enlace (requiere internet)",link_ph:"Pega el enlace de la fuente, ZIP o Google Fonts…",link_btn:"Importar desde enlace",link_help:"Admite: archivo directo (.ttf/.otf/.woff/.woff2), <b>.zip</b> (se descomprime y carga todo), Google Fonts y páginas web. Para <b>fontspace</b>, <b>freejapanesefont</b> o <b>itch.io</b>: clic derecho en el botón de descarga ▸ <i>Copiar dirección del enlace</i> y pégalo aquí.",loaded_fonts:"Fuentes cargadas",none_yet:"Ninguna todavía.",settings:"Ajustes",size:"Tamaño",weight:"Grosor",letter_spacing:"Interletrado",line_height:"Interlineado",style:"Estilo",italic:"Cursiva",underline:"Subrayado",upper:"MAYÚS",text_color:"Texto",bg_color:"Fondo",view:"Vista",v_custom:"Texto propio",v_pangram:"Pangrama",v_alpha:"Abecedario",v_ramp:"Escala tamaños",tip:"Consejo: carga varias fuentes y haz clic en cada una de la lista para comparar. Nada sale de tu equipo.",sample_ph:"Escribe tu texto de ejemplo aquí…",preview_empty:"Importa una fuente para empezar la previsualización.",dl_title:"Descargar fuente",rm_title:"Quitar",msg_loading:"Cargando…",msg_offline_link:"Sin conexión: no se puede importar desde un enlace.",msg_imported_one:"Importado (1 fuente).",msg_imported_n:"Importado ({n} fuentes).",msg_zip_no_fonts:"El ZIP no contenía fuentes reconocibles.",msg_link_no_fonts:"El enlace no contiene fuentes reconocibles.",msg_html_no_fonts:"⚠ Este sitio no permite importar automáticamente. Descarga tú el archivo o .zip desde la página y luego impórtalo aquí (arrástralo o usa «Importar fuente»). Los .zip también funcionan al arrastrarlos.",msg_cors:"⚠ El sitio bloquea el acceso directo (CORS). Descarga tú mismo el archivo o el .zip desde la web y luego impórtalo aquí: arrástralo al recuadro «Importar fuente» (los .zip se abren y cargan solos).",msg_error:"Error: {e}",alert_zip_no_fonts:"El ZIP «{name}» no contenía fuentes reconocibles.",alert_load_fail:"No se pudo cargar «{name}»: {e}",sample_default:"El veloz murciélago hindú comía feliz cardillo y kiwi. 1234567890",pangram:"El veloz murciélago hindú comía feliz cardillo y kiwi.\nThe quick brown fox jumps over the lazy dog."},
+  fr:{subtitle:"TTF · OTF · WOFF · WOFF2 — tout local, hors ligne",import_font:"Importer une police",import_hint:"Glissez ici ou cliquez — polices ou .zip, plusieurs possibles",link_section:"Depuis un lien (nécessite Internet)",link_ph:"Collez le lien d’une police, d’un ZIP ou de Google Fonts…",link_btn:"Importer depuis un lien",link_help:"Prend en charge : fichier direct (.ttf/.otf/.woff/.woff2), <b>.zip</b> (décompressé, tout chargé), Google Fonts et pages web. Pour <b>fontspace</b>, <b>freejapanesefont</b> ou <b>itch.io</b> : clic droit sur le bouton de téléchargement ▸ <i>Copier l’adresse du lien</i> et collez-le ici.",loaded_fonts:"Polices chargées",none_yet:"Aucune pour l’instant.",settings:"Réglages",size:"Taille",weight:"Graisse",letter_spacing:"Interlettrage",line_height:"Interligne",style:"Style",italic:"Italique",underline:"Souligné",upper:"MAJUSC",text_color:"Texte",bg_color:"Fond",view:"Vue",v_custom:"Texte libre",v_pangram:"Pangramme",v_alpha:"Alphabet",v_ramp:"Échelle de tailles",tip:"Astuce : chargez plusieurs polices et cliquez sur chacune dans la liste pour comparer. Rien ne quitte votre appareil.",sample_ph:"Saisissez votre texte d’exemple ici…",preview_empty:"Importez une police pour lancer l’aperçu.",dl_title:"Télécharger la police",rm_title:"Retirer",msg_loading:"Chargement…",msg_offline_link:"Hors ligne : impossible d’importer depuis un lien.",msg_imported_one:"Importé (1 police).",msg_imported_n:"Importé ({n} polices).",msg_zip_no_fonts:"Le ZIP ne contenait aucune police reconnue.",msg_link_no_fonts:"Le lien ne contient aucune police reconnue.",msg_html_no_fonts:"⚠ Ce site n’autorise pas l’import automatique. Téléchargez vous-même le fichier ou le .zip depuis la page, puis importez-le ici (glissez-le ou utilisez « Importer une police »). Les .zip fonctionnent aussi par glisser-déposer.",msg_cors:"⚠ Le site bloque l’accès direct (CORS). Téléchargez vous-même le fichier ou le .zip, puis importez-le ici : glissez-le sur la zone « Importer une police » (les .zip s’ouvrent et se chargent seuls).",msg_error:"Erreur : {e}",alert_zip_no_fonts:"Le ZIP « {name} » ne contenait aucune police reconnue.",alert_load_fail:"Impossible de charger « {name} » : {e}",sample_default:"Portez ce vieux whisky au juge blond qui fume. 1234567890",pangram:"Portez ce vieux whisky au juge blond qui fume.\nVoix ambiguë d’un cœur qui au zéphyr préfère les jattes de kiwis."},
+  pt:{subtitle:"TTF · OTF · WOFF · WOFF2 — tudo local, off-line",import_font:"Importar fonte",import_hint:"Arraste aqui ou clique — fontes ou .zip, várias de uma vez",link_section:"A partir de um link (requer internet)",link_ph:"Cole o link da fonte, ZIP ou Google Fonts…",link_btn:"Importar de um link",link_help:"Aceita: arquivo direto (.ttf/.otf/.woff/.woff2), <b>.zip</b> (descompactado, carrega tudo), Google Fonts e páginas web. Para <b>fontspace</b>, <b>freejapanesefont</b> ou <b>itch.io</b>: clique com o botão direito no botão de download ▸ <i>Copiar endereço do link</i> e cole aqui.",loaded_fonts:"Fontes carregadas",none_yet:"Nenhuma ainda.",settings:"Ajustes",size:"Tamanho",weight:"Peso",letter_spacing:"Espaçamento",line_height:"Entrelinha",style:"Estilo",italic:"Itálico",underline:"Sublinhado",upper:"MAIÚS",text_color:"Texto",bg_color:"Fundo",view:"Visualização",v_custom:"Texto próprio",v_pangram:"Pangrama",v_alpha:"Alfabeto",v_ramp:"Escala de tamanhos",tip:"Dica: carregue várias fontes e clique em cada uma na lista para comparar. Nada sai do seu dispositivo.",sample_ph:"Digite seu texto de exemplo aqui…",preview_empty:"Importe uma fonte para começar a visualização.",dl_title:"Baixar fonte",rm_title:"Remover",msg_loading:"Carregando…",msg_offline_link:"Sem conexão: não é possível importar de um link.",msg_imported_one:"Importado (1 fonte).",msg_imported_n:"Importado ({n} fontes).",msg_zip_no_fonts:"O ZIP não continha fontes reconhecíveis.",msg_link_no_fonts:"O link não contém fontes reconhecíveis.",msg_html_no_fonts:"⚠ Este site não permite importação automática. Baixe você mesmo o arquivo ou .zip da página e depois importe aqui (arraste-o ou use “Importar fonte”). Os .zip também funcionam ao arrastar.",msg_cors:"⚠ O site bloqueia o acesso direto (CORS). Baixe você mesmo o arquivo ou o .zip e depois importe aqui: arraste-o para a área “Importar fonte” (os .zip abrem e carregam sozinhos).",msg_error:"Erro: {e}",alert_zip_no_fonts:"O ZIP “{name}” não continha fontes reconhecíveis.",alert_load_fail:"Não foi possível carregar “{name}”: {e}",sample_default:"Um pequeno jabuti xereta viu dez cegonhas felizes. 1234567890",pangram:"Um pequeno jabuti xereta viu dez cegonhas felizes.\nThe quick brown fox jumps over the lazy dog."},
+  ru:{subtitle:"TTF · OTF · WOFF · WOFF2 — всё локально, офлайн",import_font:"Импорт шрифта",import_hint:"Перетащите сюда или нажмите — шрифты или .zip, можно несколько",link_section:"По ссылке (нужен интернет)",link_ph:"Вставьте ссылку на шрифт, ZIP или Google Fonts…",link_btn:"Импорт по ссылке",link_help:"Поддерживается: прямой файл (.ttf/.otf/.woff/.woff2), <b>.zip</b> (распаковывается, грузит всё), Google Fonts и веб-страницы. Для <b>fontspace</b>, <b>freejapanesefont</b> или <b>itch.io</b>: правый клик по кнопке загрузки ▸ <i>Копировать адрес ссылки</i> и вставьте сюда.",loaded_fonts:"Загруженные шрифты",none_yet:"Пока нет.",settings:"Настройки",size:"Размер",weight:"Насыщенность",letter_spacing:"Межбуквенный интервал",line_height:"Межстрочный интервал",style:"Стиль",italic:"Курсив",underline:"Подчёркивание",upper:"ПРОПИСНЫЕ",text_color:"Текст",bg_color:"Фон",view:"Вид",v_custom:"Свой текст",v_pangram:"Панграмма",v_alpha:"Алфавит",v_ramp:"Шкала размеров",tip:"Совет: загрузите несколько шрифтов и щёлкайте по каждому в списке для сравнения. Ничего не покидает ваше устройство.",sample_ph:"Введите здесь свой пример текста…",preview_empty:"Импортируйте шрифт, чтобы начать предпросмотр.",dl_title:"Скачать шрифт",rm_title:"Удалить",msg_loading:"Загрузка…",msg_offline_link:"Нет сети: импорт по ссылке недоступен.",msg_imported_one:"Импортировано (1 шрифт).",msg_imported_n:"Импортировано ({n} шрифтов).",msg_zip_no_fonts:"В ZIP не найдено распознаваемых шрифтов.",msg_link_no_fonts:"По ссылке нет распознаваемых шрифтов.",msg_html_no_fonts:"⚠ Этот сайт не разрешает автоматический импорт. Скачайте файл или .zip со страницы сами, затем импортируйте здесь (перетащите или нажмите «Импорт шрифта»). Файлы .zip тоже работают при перетаскивании.",msg_cors:"⚠ Сайт блокирует прямой доступ (CORS). Скачайте файл или .zip сами, затем импортируйте здесь: перетащите его в область «Импорт шрифта» (.zip открываются и загружаются сами).",msg_error:"Ошибка: {e}",alert_zip_no_fonts:"В ZIP «{name}» не найдено распознаваемых шрифтов.",alert_load_fail:"Не удалось загрузить «{name}»: {e}",sample_default:"Съешь же ещё этих мягких французских булок да выпей чаю. 1234567890",pangram:"Съешь же ещё этих мягких французских булок да выпей чаю.\nВ чащах юга жил бы цитрус? Да, но фальшивый экземпляр!"},
+  zh:{subtitle:"TTF · OTF · WOFF · WOFF2 — 全部本地，离线可用",import_font:"导入字体",import_hint:"拖到此处或点击 — 字体或 .zip，可批量",link_section:"从链接导入（需要联网）",link_ph:"粘贴字体、ZIP 或 Google Fonts 链接…",link_btn:"从链接导入",link_help:"支持：直接文件（.ttf/.otf/.woff/.woff2）、<b>.zip</b>（解压并全部加载）、Google Fonts 和网页。对于 <b>fontspace</b>、<b>freejapanesefont</b> 或 <b>itch.io</b>：右键点击下载按钮 ▸ <i>复制链接地址</i>，然后粘贴到这里。",loaded_fonts:"已加载字体",none_yet:"暂无。",settings:"设置",size:"字号",weight:"字重",letter_spacing:"字间距",line_height:"行距",style:"样式",italic:"斜体",underline:"下划线",upper:"大写",text_color:"文字",bg_color:"背景",view:"视图",v_custom:"自定义文本",v_pangram:"全字母句",v_alpha:"字母表",v_ramp:"字号阶梯",tip:"提示：加载多个字体并点击列表中的每个进行对比。数据不会离开你的设备。",sample_ph:"在此输入示例文本…",preview_empty:"导入字体以开始预览。",dl_title:"下载字体",rm_title:"移除",msg_loading:"加载中…",msg_offline_link:"离线：无法从链接导入。",msg_imported_one:"已导入（1 个字体）。",msg_imported_n:"已导入（{n} 个字体）。",msg_zip_no_fonts:"ZIP 中没有可识别的字体。",msg_link_no_fonts:"链接中没有可识别的字体。",msg_html_no_fonts:"⚠ 该网站不允许自动导入。请自行从页面下载文件或 .zip，然后在此导入（拖入，或使用“导入字体”）。.zip 也可直接拖入。",msg_cors:"⚠ 该网站阻止直接访问（CORS）。请自行下载文件或 .zip，然后在此导入：将其拖到“导入字体”框（.zip 会自动打开并加载）。",msg_error:"错误：{e}",alert_zip_no_fonts:"ZIP“{name}”中没有可识别的字体。",alert_load_fail:"无法加载“{name}”：{e}",sample_default:"字体排版测试 The quick brown fox 1234567890",pangram:"天地玄黄，宇宙洪荒。\n日月盈昃，辰宿列张。"},
+  hi:{subtitle:"TTF · OTF · WOFF · WOFF2 — सब कुछ लोकल, ऑफ़लाइन",import_font:"फ़ॉन्ट आयात करें",import_hint:"यहाँ खींचें या क्लिक करें — फ़ॉन्ट या .zip, कई एक साथ",link_section:"लिंक से (इंटरनेट चाहिए)",link_ph:"फ़ॉन्ट, ZIP या Google Fonts का लिंक पेस्ट करें…",link_btn:"लिंक से आयात करें",link_help:"समर्थित: सीधी फ़ाइल (.ttf/.otf/.woff/.woff2), <b>.zip</b> (खोलकर सब लोड करता है), Google Fonts और वेब पेज। <b>fontspace</b>, <b>freejapanesefont</b> या <b>itch.io</b> के लिए: डाउनलोड बटन पर राइट-क्लिक ▸ <i>लिंक का पता कॉपी करें</i> और यहाँ पेस्ट करें।",loaded_fonts:"लोड किए गए फ़ॉन्ट",none_yet:"अभी कोई नहीं।",settings:"सेटिंग्स",size:"आकार",weight:"मोटाई",letter_spacing:"अक्षर अंतराल",line_height:"पंक्ति ऊँचाई",style:"शैली",italic:"तिरछा",underline:"रेखांकित",upper:"बड़े अक्षर",text_color:"पाठ",bg_color:"पृष्ठभूमि",view:"दृश्य",v_custom:"अपना पाठ",v_pangram:"पैनग्राम",v_alpha:"वर्णमाला",v_ramp:"आकार श्रेणी",tip:"सुझाव: कई फ़ॉन्ट लोड करें और तुलना के लिए सूची में हर एक पर क्लिक करें। कुछ भी आपके डिवाइस से बाहर नहीं जाता।",sample_ph:"यहाँ अपना उदाहरण पाठ लिखें…",preview_empty:"पूर्वावलोकन शुरू करने के लिए फ़ॉन्ट आयात करें।",dl_title:"फ़ॉन्ट डाउनलोड करें",rm_title:"हटाएँ",msg_loading:"लोड हो रहा है…",msg_offline_link:"ऑफ़लाइन: लिंक से आयात संभव नहीं।",msg_imported_one:"आयात किया (1 फ़ॉन्ट)।",msg_imported_n:"आयात किया ({n} फ़ॉन्ट)।",msg_zip_no_fonts:"ZIP में कोई पहचानने योग्य फ़ॉन्ट नहीं था।",msg_link_no_fonts:"लिंक में कोई पहचानने योग्य फ़ॉन्ट नहीं है।",msg_html_no_fonts:"⚠ यह साइट स्वचालित आयात की अनुमति नहीं देती। पेज से फ़ाइल या .zip स्वयं डाउनलोड करें, फिर यहाँ आयात करें (खींचें या “फ़ॉन्ट आयात करें” का उपयोग करें)। .zip खींचने पर भी काम करते हैं।",msg_cors:"⚠ साइट सीधी पहुँच रोकती है (CORS)। फ़ाइल या .zip स्वयं डाउनलोड करें, फिर यहाँ आयात करें: इसे “फ़ॉन्ट आयात करें” क्षेत्र में खींचें (.zip स्वयं खुलकर लोड हो जाते हैं)।",msg_error:"त्रुटि: {e}",alert_zip_no_fonts:"ZIP “{name}” में कोई पहचानने योग्य फ़ॉन्ट नहीं था।",alert_load_fail:"“{name}” लोड नहीं हो सका: {e}",sample_default:"सभी को सम्मान देने वाला एक अच्छा व्यक्ति। 1234567890",pangram:"ऋषियों को सताने वाले दुष्ट राक्षसों के राजा रावण का सर्वनाश करने वाले भगवान श्रीराम।"},
+  ar:{subtitle:"TTF · OTF · WOFF · WOFF2 — كل شيء محلي، دون اتصال",import_font:"استيراد خط",import_hint:"اسحب هنا أو انقر — خطوط أو .zip، عدة معًا",link_section:"من رابط (يتطلب إنترنت)",link_ph:"الصق رابط الخط أو ZIP أو Google Fonts…",link_btn:"استيراد من رابط",link_help:"يدعم: ملف مباشر (.ttf/.otf/.woff/.woff2)، <b>.zip</b> (يُفك ويُحمّل الكل)، Google Fonts وصفحات الويب. لـ <b>fontspace</b> أو <b>freejapanesefont</b> أو <b>itch.io</b>: انقر بزر الفأرة الأيمن على زر التنزيل ▸ <i>نسخ عنوان الرابط</i> والصقه هنا.",loaded_fonts:"الخطوط المحمّلة",none_yet:"لا شيء بعد.",settings:"الإعدادات",size:"الحجم",weight:"السماكة",letter_spacing:"تباعد الأحرف",line_height:"ارتفاع السطر",style:"النمط",italic:"مائل",underline:"تسطير",upper:"أحرف كبيرة",text_color:"النص",bg_color:"الخلفية",view:"العرض",v_custom:"نص خاص",v_pangram:"جملة شاملة",v_alpha:"الأبجدية",v_ramp:"تدرّج الأحجام",tip:"نصيحة: حمّل عدة خطوط وانقر على كل منها في القائمة للمقارنة. لا شيء يغادر جهازك.",sample_ph:"اكتب نص المثال هنا…",preview_empty:"استورد خطًا لبدء المعاينة.",dl_title:"تنزيل الخط",rm_title:"إزالة",msg_loading:"جارٍ التحميل…",msg_offline_link:"دون اتصال: لا يمكن الاستيراد من رابط.",msg_imported_one:"تم الاستيراد (خط واحد).",msg_imported_n:"تم الاستيراد ({n} خطوط).",msg_zip_no_fonts:"لا يحتوي ملف ZIP على خطوط قابلة للتعرّف.",msg_link_no_fonts:"لا يحتوي الرابط على خطوط قابلة للتعرّف.",msg_html_no_fonts:"⚠ هذا الموقع لا يسمح بالاستيراد التلقائي. نزّل الملف أو ملف .zip من الصفحة بنفسك ثم استورده هنا (اسحبه أو استخدم «استيراد خط»). ملفات .zip تعمل أيضًا عند السحب.",msg_cors:"⚠ يحجب الموقع الوصول المباشر (CORS). نزّل الملف أو ملف .zip بنفسك ثم استورده هنا: اسحبه إلى مربع «استيراد خط» (تُفتح ملفات .zip وتُحمّل تلقائيًا).",msg_error:"خطأ: {e}",alert_zip_no_fonts:"لا يحتوي ملف ZIP «{name}» على خطوط قابلة للتعرّف.",alert_load_fail:"تعذّر تحميل «{name}»: {e}",sample_default:"نص تجريبي لاختبار الخطوط ١٢٣٤٥٦٧٨٩٠",pangram:"نص حكيم له سر قاطع وذو شأن عظيم مكتوب على ثوب أخضر ومغلف بجلد أزرق."},
+  bn:{subtitle:"TTF · OTF · WOFF · WOFF2 — সবকিছু লোকাল, অফলাইন",import_font:"ফন্ট আমদানি",import_hint:"এখানে টেনে আনুন বা ক্লিক করুন — ফন্ট বা .zip, একাধিক একসাথে",link_section:"লিংক থেকে (ইন্টারনেট প্রয়োজন)",link_ph:"ফন্ট, ZIP বা Google Fonts-এর লিংক পেস্ট করুন…",link_btn:"লিংক থেকে আমদানি",link_help:"সমর্থিত: সরাসরি ফাইল (.ttf/.otf/.woff/.woff2), <b>.zip</b> (খুলে সব লোড করে), Google Fonts এবং ওয়েব পেজ। <b>fontspace</b>, <b>freejapanesefont</b> বা <b>itch.io</b>-এর জন্য: ডাউনলোড বোতামে ডান-ক্লিক ▸ <i>লিংকের ঠিকানা কপি করুন</i> এবং এখানে পেস্ট করুন।",loaded_fonts:"লোড হওয়া ফন্ট",none_yet:"এখনো কিছু নেই।",settings:"সেটিংস",size:"আকার",weight:"পুরুত্ব",letter_spacing:"অক্ষর ব্যবধান",line_height:"লাইনের উচ্চতা",style:"স্টাইল",italic:"তির্যক",underline:"নিম্নরেখা",upper:"বড় হাতের",text_color:"টেক্সট",bg_color:"পটভূমি",view:"ভিউ",v_custom:"নিজের টেক্সট",v_pangram:"প্যানগ্রাম",v_alpha:"বর্ণমালা",v_ramp:"আকার স্কেল",tip:"টিপ: একাধিক ফন্ট লোড করুন এবং তুলনা করতে তালিকার প্রতিটিতে ক্লিক করুন। কিছুই আপনার ডিভাইস ছেড়ে যায় না।",sample_ph:"এখানে আপনার নমুনা টেক্সট লিখুন…",preview_empty:"প্রিভিউ শুরু করতে একটি ফন্ট আমদানি করুন।",dl_title:"ফন্ট ডাউনলোড",rm_title:"সরান",msg_loading:"লোড হচ্ছে…",msg_offline_link:"অফলাইন: লিংক থেকে আমদানি সম্ভব নয়।",msg_imported_one:"আমদানি হয়েছে (১টি ফন্ট)।",msg_imported_n:"আমদানি হয়েছে ({n}টি ফন্ট)।",msg_zip_no_fonts:"ZIP-এ শনাক্তযোগ্য কোনো ফন্ট ছিল না।",msg_link_no_fonts:"লিংকে শনাক্তযোগ্য কোনো ফন্ট নেই।",msg_html_no_fonts:"⚠ এই সাইট স্বয়ংক্রিয় আমদানির অনুমতি দেয় না। পেজ থেকে ফাইল বা .zip নিজে ডাউনলোড করুন, তারপর এখানে আমদানি করুন (টেনে আনুন বা “ফন্ট আমদানি” ব্যবহার করুন)। .zip টেনে আনলেও কাজ করে।",msg_cors:"⚠ সাইট সরাসরি অ্যাক্সেস আটকায় (CORS)। ফাইল বা .zip নিজে ডাউনলোড করুন, তারপর এখানে আমদানি করুন: “ফন্ট আমদানি” বক্সে টেনে আনুন (.zip নিজেই খুলে লোড হয়)।",msg_error:"ত্রুটি: {e}",alert_zip_no_fonts:"ZIP “{name}”-এ শনাক্তযোগ্য কোনো ফন্ট ছিল না।",alert_load_fail:"“{name}” লোড করা যায়নি: {e}",sample_default:"বাংলা ফন্ট পরীক্ষা করার নমুনা লেখা ১২৩৪৫৬৭৮৯০",pangram:"আজি বাংলার হৃদয় হতে কখন আপনি এই অপরূপ রূপে বাহির হলে জননী।"},
+  ur:{subtitle:"TTF · OTF · WOFF · WOFF2 — سب کچھ مقامی، آف لائن",import_font:"فونٹ درآمد کریں",import_hint:"یہاں گھسیٹیں یا کلک کریں — فونٹس یا .zip، کئی ایک ساتھ",link_section:"لنک سے (انٹرنیٹ درکار)",link_ph:"فونٹ، ZIP یا Google Fonts کا لنک پیسٹ کریں…",link_btn:"لنک سے درآمد کریں",link_help:"معاونت: براہ راست فائل (.ttf/.otf/.woff/.woff2)، <b>.zip</b> (کھول کر سب لوڈ کرتا ہے)، Google Fonts اور ویب صفحات۔ <b>fontspace</b>، <b>freejapanesefont</b> یا <b>itch.io</b> کے لیے: ڈاؤن لوڈ بٹن پر دائیں کلک ▸ <i>لنک کا پتہ کاپی کریں</i> اور یہاں پیسٹ کریں۔",loaded_fonts:"لوڈ شدہ فونٹس",none_yet:"ابھی کوئی نہیں۔",settings:"ترتیبات",size:"سائز",weight:"موٹائی",letter_spacing:"حروف کا فاصلہ",line_height:"سطر کی اونچائی",style:"انداز",italic:"ترچھا",underline:"خط کشیدہ",upper:"بڑے حروف",text_color:"متن",bg_color:"پس منظر",view:"منظر",v_custom:"اپنا متن",v_pangram:"پینگرام",v_alpha:"حروفِ تہجی",v_ramp:"سائز اسکیل",tip:"مشورہ: کئی فونٹس لوڈ کریں اور موازنے کے لیے فہرست میں ہر ایک پر کلک کریں۔ کچھ بھی آپ کے آلے سے باہر نہیں جاتا۔",sample_ph:"یہاں اپنا نمونہ متن لکھیں…",preview_empty:"پیش منظر شروع کرنے کے لیے فونٹ درآمد کریں۔",dl_title:"فونٹ ڈاؤن لوڈ کریں",rm_title:"ہٹائیں",msg_loading:"لوڈ ہو رہا ہے…",msg_offline_link:"آف لائن: لنک سے درآمد ممکن نہیں۔",msg_imported_one:"درآمد ہو گیا (1 فونٹ)۔",msg_imported_n:"درآمد ہو گیا ({n} فونٹس)۔",msg_zip_no_fonts:"ZIP میں کوئی قابلِ شناخت فونٹ نہیں تھا۔",msg_link_no_fonts:"لنک میں کوئی قابلِ شناخت فونٹ نہیں۔",msg_html_no_fonts:"⚠ یہ سائٹ خودکار درآمد کی اجازت نہیں دیتی۔ صفحے سے فائل یا .zip خود ڈاؤن لوڈ کریں، پھر یہاں درآمد کریں (گھسیٹیں یا ”فونٹ درآمد کریں“ استعمال کریں)۔ .zip گھسیٹنے پر بھی کام کرتے ہیں۔",msg_cors:"⚠ سائٹ براہ راست رسائی روکتی ہے (CORS)۔ فائل یا .zip خود ڈاؤن لوڈ کریں، پھر یہاں درآمد کریں: اسے ”فونٹ درآمد کریں“ خانے میں گھسیٹیں (.zip خود کھل کر لوڈ ہو جاتے ہیں)۔",msg_error:"خرابی: {e}",alert_zip_no_fonts:"ZIP ”{name}“ میں کوئی قابلِ شناخت فونٹ نہیں تھا۔",alert_load_fail:"”{name}“ لوڈ نہیں ہو سکا: {e}",sample_default:"فونٹ کی جانچ کے لیے نمونہ متن ۱۲۳۴۵۶۷۸۹۰",pangram:"ٹھنڈ میں ایک قحط زدہ گاؤں سے گزرتے وقت ایک چڑچڑے شخص کو برفباری میں دبے پھول دکھائی دیے۔"}
+,
+  ja:{subtitle:"TTF · OTF · WOFF · WOFF2 — すべてローカル、オフライン",import_font:"フォントを読み込む",import_hint:"ここにドラッグまたはクリック — フォントや .zip、複数可",link_section:"リンクから（インターネットが必要）",link_ph:"フォント・ZIP・Google Fonts のリンクを貼り付け…",link_btn:"リンクから読み込む",link_help:"対応：直接ファイル（.ttf/.otf/.woff/.woff2）、<b>.zip</b>（解凍してすべて読み込み）、Google Fonts、ウェブページ。<b>fontspace</b>・<b>freejapanesefont</b>・<b>itch.io</b> の場合：ダウンロードボタンを右クリック ▸ <i>リンクのアドレスをコピー</i> してここに貼り付け。",loaded_fonts:"読み込んだフォント",none_yet:"まだありません。",settings:"設定",size:"サイズ",weight:"太さ",letter_spacing:"字間",line_height:"行間",style:"スタイル",italic:"イタリック",underline:"下線",upper:"大文字",text_color:"文字",bg_color:"背景",view:"表示",v_custom:"自由入力",v_pangram:"パングラム",v_alpha:"アルファベット",v_ramp:"サイズ段階",tip:"ヒント：複数のフォントを読み込み、リストで各項目をクリックして比較できます。データは端末の外に出ません。",sample_ph:"ここにサンプルテキストを入力…",preview_empty:"プレビューを始めるにはフォントを読み込んでください。",dl_title:"フォントをダウンロード",rm_title:"削除",msg_loading:"読み込み中…",msg_offline_link:"オフライン：リンクからは読み込めません。",msg_imported_one:"読み込みました（1 フォント）。",msg_imported_n:"読み込みました（{n} フォント）。",msg_zip_no_fonts:"ZIP に認識可能なフォントがありませんでした。",msg_link_no_fonts:"リンクに認識可能なフォントがありません。",msg_html_no_fonts:"⚠ このサイトは自動読み込みを許可していません。ページからファイルまたは .zip を自分でダウンロードし、ここで読み込んでください（ドラッグ、または「フォントを読み込む」を使用）。.zip はドラッグでも動作します。",msg_cors:"⚠ サイトが直接アクセスをブロックしています（CORS）。ファイルまたは .zip を自分でダウンロードし、ここで読み込んでください：「フォントを読み込む」欄にドラッグ（.zip は自動で開いて読み込まれます）。",msg_error:"エラー：{e}",alert_zip_no_fonts:"ZIP「{name}」に認識可能なフォントがありませんでした。",alert_load_fail:"「{name}」を読み込めませんでした：{e}",sample_default:"いろはにほへと ちりぬるを 1234567890",pangram:"いろはにほへと ちりぬるを わかよたれそ つねならむ\n色は匂へど 散りぬるを"}
+};
+let lang = 'es';
+let sampleTouched = false;
+function t(key, vars){
+  const d = I18N[lang] || I18N.en;
+  let s = (d[key] != null ? d[key] : (I18N.en[key] != null ? I18N.en[key] : key));
+  if(vars) for(const k in vars) s = s.split('{'+k+'}').join(vars[k]);
+  return s;
+}
+function applyI18n(){
+  const h = document.documentElement;
+  h.lang = lang; h.dir = RTL.has(lang) ? 'rtl' : 'ltr';
+  document.querySelectorAll('[data-i18n]').forEach(el=> el.textContent = t(el.dataset.i18n));
+  document.querySelectorAll('[data-i18n-html]').forEach(el=> el.innerHTML = t(el.dataset.i18nHtml));
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=> el.placeholder = t(el.dataset.i18nPh));
+  if(!sampleTouched){ const s=$('#sample'); if(s) s.value = t('sample_default'); }
+  renderFontList(); render();
+}
 
 const drop = $('#drop'), fileInput = $('#file');
 drop.onclick = () => fileInput.click();
@@ -190,13 +226,13 @@ async function handleFiles(list){
       const u8 = new Uint8Array(buf);
       if(isZip || sniff(u8)==='zip'){
         const n = await importFontsFromZip(u8);
-        if(!n) alert('El ZIP «'+file.name+'» no contenía fuentes reconocibles.');
+        if(!n) alert(t('alert_zip_no_fonts', {name:file.name}));
       }else{
         await loadFontFromBuffer(file.name.replace(/\.[^.]+$/,''), buf);
       }
       renderFontList(); render();
     }catch(err){
-      alert('No se pudo cargar «'+file.name+'»: '+err.message);
+      alert(t('alert_load_fail', {name:file.name, e:err.message}));
     }
   }
 }
@@ -390,51 +426,57 @@ async function importFromHtml(html, baseUrl){
 async function importFromUrl(){
   const url = urlInput.value.trim();
   if(!url) return;
-  if(!navigator.onLine){ msgErr('Sin conexión: no se puede importar desde un enlace.'); return; }
-  msgInfo('Cargando…'); urlBtn.disabled=true;
+  if(!navigator.onLine){ msgErr(t('msg_offline_link')); return; }
+  msgInfo(t('msg_loading')); urlBtn.disabled=true;
   try{
     const res = await fetch(url, {mode:'cors'});
     if(!res.ok) throw new Error('HTTP '+res.status);
     const u8 = new Uint8Array(await res.arrayBuffer());
     const kind = sniff(u8);
-    let loaded = 0, note = '';
+    let loaded = 0;
 
     if(kind==='font'){
       await loadFontFromBuffer(nameFromUrl(url), u8.slice().buffer); loaded = 1;
     }else if(kind==='zip'){
       loaded = await importFontsFromZip(u8);
-      if(!loaded) throw new Error('El ZIP no contenía fuentes reconocibles.');
+      if(!loaded) throw new Error('zip_no_fonts');
     }else{
       const text = new TextDecoder().decode(u8);
       if(/@font-face/i.test(text)){
         loaded = await importFromCss(text, url);
       }else if(/<html|<!doctype/i.test(text.slice(0,2000))){
         loaded = await importFromHtml(text, url);
-        if(!loaded) throw new Error('⚠ Este sitio no permite importar automáticamente. Descarga tú el archivo o .zip desde la página y luego impórtalo aquí (arrástralo o usa «Importar fuente»). Los .zip también funcionan al arrastrarlos.');
+        if(!loaded) throw new Error('html_no_fonts');
       }
-      if(!loaded) throw new Error('El enlace no contiene fuentes reconocibles.');
+      if(!loaded) throw new Error('link_no_fonts');
     }
     renderFontList(); render();
-    msgOk(loaded===1 ? 'Importado (1 fuente).' : 'Importado ('+loaded+' fuentes).' + note);
+    msgOk(loaded===1 ? t('msg_imported_one') : t('msg_imported_n', {n:loaded}));
     urlInput.value='';
   }catch(err){
-    if(/Failed to fetch|NetworkError|CORS|load failed/i.test(err.message))
-      msgErr('⚠ El sitio bloquea el acceso directo (CORS). Descarga tú mismo el archivo o el .zip desde la web y luego impórtalo aquí: arrástralo al recuadro «Importar fuente» (los .zip se abren y cargan solos).');
-    else msgErr(err.message.startsWith('⚠') ? err.message : 'Error: ' + err.message);
+    const m = err.message;
+    if(/Failed to fetch|NetworkError|CORS|load failed/i.test(m)) msgErr(t('msg_cors'));
+    else if(m==='zip_no_fonts')  msgErr(t('msg_zip_no_fonts'));
+    else if(m==='html_no_fonts') msgErr(t('msg_html_no_fonts'));
+    else if(m==='link_no_fonts') msgErr(t('msg_link_no_fonts'));
+    else msgErr(t('msg_error', {e:m}));
   }finally{ urlBtn.disabled=false; }
 }
 
 function renderFontList(){
   const box = $('#fontlist');
-  if(!fonts.length){ box.innerHTML='<span style="color:var(--muted);font-size:12px">Ninguna todavía.</span>'; return; }
+  if(!fonts.length){ box.innerHTML='<span style="color:var(--muted);font-size:12px"></span>'; box.firstChild.textContent=t('none_yet'); return; }
   box.innerHTML='';
   fonts.forEach((f,i)=>{
     const el = document.createElement('div');
     el.className = 'fontitem' + (f.family===activeFamily?' active':'');
-    el.innerHTML = `<span class="name" style="font-family:'${f.family}'">${f.name}</span><span class="dl" title="Descargar fuente"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11"/><path d="m8 11 4 4 4-4"/><path d="M5 20h14"/></svg></span><span class="rm" title="Quitar">✕</span>`;
-    el.querySelector('.name').onclick = ()=>{activeFamily=f.family; renderFontList(); render();};
-    el.querySelector('.dl').onclick = (e)=>{e.stopPropagation(); downloadFont(i);};
-    el.querySelector('.rm').onclick = (e)=>{e.stopPropagation(); fonts.splice(i,1); if(activeFamily===f.family) activeFamily=fonts.length?fonts[0].family:null; renderFontList(); render();};
+    el.innerHTML = `<span class="name" style="font-family:'${f.family}'"></span><span class="dl"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11"/><path d="m8 11 4 4 4-4"/><path d="M5 20h14"/></svg></span><span class="rm">✕</span>`;
+    const nameEl = el.querySelector('.name'); nameEl.textContent = f.name;
+    const dlEl = el.querySelector('.dl'); dlEl.title = t('dl_title');
+    const rmEl = el.querySelector('.rm'); rmEl.title = t('rm_title');
+    nameEl.onclick = ()=>{activeFamily=f.family; renderFontList(); render();};
+    dlEl.onclick = (e)=>{e.stopPropagation(); downloadFont(i);};
+    rmEl.onclick = (e)=>{e.stopPropagation(); fonts.splice(i,1); if(activeFamily===f.family) activeFamily=fonts.length?fonts[0].family:null; renderFontList(); render();};
     box.appendChild(el);
   });
 }
@@ -447,7 +489,7 @@ const controls = {
   line:{el:$('#line'), val:$('#lineVal'), fmt:v=>v},
 };
 Object.values(controls).forEach(c=>c.el.addEventListener('input',()=>{c.val.textContent=c.fmt(c.el.value); render();}));
-$('#sample').addEventListener('input', render);
+$('#sample').addEventListener('input', ()=>{ sampleTouched = true; render(); });
 $('#fg').addEventListener('input', render);
 $('#bg').addEventListener('input', render);
 
@@ -467,7 +509,7 @@ function render(){
   const prev = $('#preview');
   prev.style.background = $('#bg').value;
   document.querySelector('.content').style.background = $('#bg').value;
-  if(!activeFamily){ prev.innerHTML='<div class="empty">Importa una fuente para empezar la previsualización.</div>'; return; }
+  if(!activeFamily){ prev.innerHTML='<div class="empty"></div>'; prev.firstChild.textContent=t('preview_empty'); return; }
 
   const size = controls.size.el.value;
   const base = {
@@ -494,7 +536,7 @@ function render(){
   if(viewMode==='custom'){
     addLine($('#sample').value || ' ', {fontSize:size+'px'});
   }else if(viewMode==='pangram'){
-    addLine(PANGRAM, {fontSize:size+'px'});
+    addLine(t('pangram'), {fontSize:size+'px'});
   }else if(viewMode==='alpha'){
     addLine(ALPHA, {fontSize:size+'px'});
   }else if(viewMode==='ramp'){
@@ -507,7 +549,17 @@ function render(){
     });
   }
 }
-render();
+
+// ---- inicialización del idioma ----
+const langSel = $('#lang');
+LANGS.forEach(([code,name])=>{ const o=document.createElement('option'); o.value=code; o.textContent=name; langSel.appendChild(o); });
+let detected = 'en';
+try{ const p=(navigator.language||'en').slice(0,2).toLowerCase(); if(LANGS.some(l=>l[0]===p)) detected=p; }catch(_){}
+try{ lang = localStorage.getItem('fonttest_lang') || detected; }catch(_){ lang = detected; }
+if(!LANGS.some(l=>l[0]===lang)) lang = 'en';
+langSel.value = lang;
+langSel.onchange = ()=>{ lang = langSel.value; try{ localStorage.setItem('fonttest_lang', lang); }catch(_){} applyI18n(); };
+applyI18n();
 </script>
 </body>
 </html>

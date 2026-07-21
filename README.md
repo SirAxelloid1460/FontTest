@@ -1,9 +1,10 @@
-# 🔤 FontTest
+# 🔤 FontTest — versión offline
 
 - **Repositorio:** <https://github.com/SirAxelloid1460/FontTest>
 - **Versión web (sin instalar):** <https://siraxelloid1460.github.io/FontTest/>
+- **Novedades:** ver [CHANGELOG.md](CHANGELOG.md)
 
-App de escritorio ligera para **probar fuentes** `.ttf`, `.otf`, `.woff` y `.woff2`.
+App ligera para **probar fuentes** `.ttf`, `.otf`, `.woff` y `.woff2`.
 Es un **único archivo HTML** que se abre en tu navegador — sin instalación, sin dependencias y **100 % offline**.
 
 ## Uso
@@ -42,7 +43,5 @@ accede a internet si tú pegas un enlace para importar desde él.
 
 Copyright (C) 2026 SirAxelloid1460
 
-Este programa es software libre: puedes redistribuirlo y/o modificarlo bajo los términos
-de la **GNU General Public License v3** (o, a tu elección, cualquier versión posterior)
-publicada por la Free Software Foundation. Se distribuye SIN NINGUNA GARANTÍA.
-Consulta el archivo [LICENSE](LICENSE) o <https://www.gnu.org/licenses/> para el texto completo.
+Software libre bajo la **GNU General Public License v3** (o posterior), SIN GARANTÍA.
+Ver [LICENSE](LICENSE) o <https://www.gnu.org/licenses/>.
